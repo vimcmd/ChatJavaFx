@@ -1,16 +1,19 @@
 package java.com.github.vimcmd.message;
 
+import java.com.github.vimcmd.server.ChatServerClientConnectionRunnable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChatMessageImpl implements ChatMessage {
 
     private String from;
+    private ChatServerClientConnectionRunnable sender;
     private List<String> recipients;
     private String messageBody;
 
-    public ChatMessageImpl(String messageBody) {
+    public ChatMessageImpl(ChatServerClientConnectionRunnable from, String messageBody) {
         recipients = new ArrayList<>();
+        this.sender = from;
         this.messageBody = messageBody;
     }
 

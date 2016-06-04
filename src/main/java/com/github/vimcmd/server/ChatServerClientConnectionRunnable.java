@@ -2,7 +2,7 @@ package java.com.github.vimcmd.server;
 
 import java.io.PrintStream;
 
-public interface ChatServerClientThread {
+public interface ChatServerClientConnectionRunnable extends Runnable {
 
     PrintStream getPrintStream();
 

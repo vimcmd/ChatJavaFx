@@ -4,12 +4,12 @@ import java.util.Map;
 
 public interface ChatServer {
 
-    Map<String, ChatServerClientThread> getUsers();
+    Map<String, ChatServerClientConnectionRunnable> getUsers();
 
     boolean isUserExists(String userName);
 
-    ChatServerClientThread getUser(String userName);
+    ChatServerClientConnectionRunnable getUser(String userName);
 
-    void send(ChatServerClientThread from, String messageBody);
+    void send(ChatServerClientConnectionRunnable from, String messageBody);
 
 }
