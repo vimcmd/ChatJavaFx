@@ -10,12 +10,12 @@ public interface ChatMessage {
 
     String getFrom();
 
-    void setFrom();
+    void setFrom(String from);
 
     List<String> getRecipients();
 
     String getMessageBody();
 
-    void setMessageBody();
+    void setMessageBody(String messageBody);
 
 }
