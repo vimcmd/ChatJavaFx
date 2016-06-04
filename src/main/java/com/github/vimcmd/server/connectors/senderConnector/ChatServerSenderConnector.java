@@ -1,7 +1,7 @@
-package java.com.github.vimcmd.connector;
+package java.com.github.vimcmd.server.connectors.senderConnector;
 
 import java.com.github.vimcmd.message.ChatMessage;
-import java.com.github.vimcmd.server.ChatServerClientThread;
+import java.com.github.vimcmd.server.ChatServerClientConnectionRunnable;
 
 public interface ChatServerSenderConnector {
 
@@ -11,7 +11,7 @@ public interface ChatServerSenderConnector {
 
     void sendServerPrivateMessage(String recipient, String messageBody);
 
-    void sendServerPrivateMessage(ChatServerClientThread client, String messageBody);
+    void sendServerPrivateMessage(ChatServerClientConnectionRunnable client, String messageBody);
 
     void sendServerBroadcastMessage(String messageBody);
 
