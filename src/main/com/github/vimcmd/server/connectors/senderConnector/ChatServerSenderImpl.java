@@ -2,7 +2,7 @@ package com.github.vimcmd.server.connectors.senderConnector;
 
 import com.github.vimcmd.server.ChatServer;
 import com.github.vimcmd.message.ChatMessage;
-import com.github.vimcmd.server.ChatServerClientConnectionRunnable;
+import com.github.vimcmd.server.socketThread.ChatServerClientConnectionRunnable;
 import com.github.vimcmd.server.resources.ResourceManager;
 import java.io.PrintStream;
 import java.util.Map;

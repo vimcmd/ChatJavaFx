@@ -6,6 +6,8 @@ import com.github.vimcmd.server.commands.Comandlet;
 import com.github.vimcmd.server.connectors.senderConnector.ChatServerSenderConnector;
 import com.github.vimcmd.server.connectors.senderConnector.ChatServerSenderImpl;
 import com.github.vimcmd.server.resources.ResourceManager;
+import com.github.vimcmd.server.socketThread.ChatServerClientConnectionImpl;
+import com.github.vimcmd.server.socketThread.ChatServerClientConnectionRunnable;
 
 import java.io.IOException;
 import java.net.BindException;

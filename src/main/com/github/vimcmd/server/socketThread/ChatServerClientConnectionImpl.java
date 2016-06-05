@@ -1,4 +1,6 @@
-package com.github.vimcmd.server;
+package com.github.vimcmd.server.socketThread;
+
+import com.github.vimcmd.server.ChatServer;
 
 import java.io.BufferedReader;
 import java.io.IOException;

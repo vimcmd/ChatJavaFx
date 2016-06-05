@@ -1,6 +1,6 @@
 package com.github.vimcmd.message;
 
-import com.github.vimcmd.server.ChatServerClientConnectionRunnable;
+import com.github.vimcmd.server.socketThread.ChatServerClientConnectionRunnable;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.github.vimcmd.server.connectors.senderConnector;
 
 import com.github.vimcmd.message.ChatMessage;
-import com.github.vimcmd.server.ChatServerClientConnectionRunnable;
+import com.github.vimcmd.server.socketThread.ChatServerClientConnectionRunnable;
 
 public interface ChatServerSenderConnector {
 

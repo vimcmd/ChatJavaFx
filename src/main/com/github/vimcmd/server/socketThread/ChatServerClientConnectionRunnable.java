@@ -1,4 +1,4 @@
-package com.github.vimcmd.server;
+package com.github.vimcmd.server.socketThread;
 
 import java.io.PrintStream;
 
