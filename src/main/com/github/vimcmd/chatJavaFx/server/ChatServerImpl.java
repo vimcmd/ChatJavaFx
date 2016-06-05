@@ -1,13 +1,13 @@
-package com.github.vimcmd.server;
+package com.github.vimcmd.chatJavaFx.server;
 
-import com.github.vimcmd.message.ChatMessage;
-import com.github.vimcmd.message.ChatMessageImpl;
-import com.github.vimcmd.server.commands.Comandlet;
-import com.github.vimcmd.server.connectors.senderConnector.ChatServerSenderConnector;
-import com.github.vimcmd.server.connectors.senderConnector.ChatServerSenderImpl;
-import com.github.vimcmd.server.resources.ResourceManager;
-import com.github.vimcmd.server.socketThread.ChatServerClientConnectionImpl;
-import com.github.vimcmd.server.socketThread.ChatServerClientConnectionRunnable;
+import com.github.vimcmd.chatJavaFx.message.ChatMessageImpl;
+import com.github.vimcmd.chatJavaFx.server.connectors.senderConnector.ChatServerSenderImpl;
+import com.github.vimcmd.chatJavaFx.server.socketThread.ChatServerClientConnectionImpl;
+import com.github.vimcmd.chatJavaFx.message.ChatMessage;
+import com.github.vimcmd.chatJavaFx.server.commands.Comandlet;
+import com.github.vimcmd.chatJavaFx.server.connectors.senderConnector.ChatServerSenderConnector;
+import com.github.vimcmd.chatJavaFx.server.resources.ResourceManager;
+import com.github.vimcmd.chatJavaFx.server.socketThread.ChatServerClientConnectionRunnable;
 
 import java.io.IOException;
 import java.net.BindException;

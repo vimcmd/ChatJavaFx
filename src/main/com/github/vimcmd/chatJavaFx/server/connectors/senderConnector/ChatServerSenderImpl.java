@@ -1,9 +1,9 @@
-package com.github.vimcmd.server.connectors.senderConnector;
+package com.github.vimcmd.chatJavaFx.server.connectors.senderConnector;
 
-import com.github.vimcmd.server.ChatServer;
-import com.github.vimcmd.message.ChatMessage;
-import com.github.vimcmd.server.socketThread.ChatServerClientConnectionRunnable;
-import com.github.vimcmd.server.resources.ResourceManager;
+import com.github.vimcmd.chatJavaFx.server.ChatServer;
+import com.github.vimcmd.chatJavaFx.message.ChatMessage;
+import com.github.vimcmd.chatJavaFx.server.socketThread.ChatServerClientConnectionRunnable;
+import com.github.vimcmd.chatJavaFx.server.resources.ResourceManager;
 import java.io.PrintStream;
 import java.util.Map;
 

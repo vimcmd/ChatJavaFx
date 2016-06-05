@@ -1,6 +1,6 @@
-package com.github.vimcmd.server.socketThread;
+package com.github.vimcmd.chatJavaFx.server.socketThread;
 
-import com.github.vimcmd.server.ChatServer;
+import com.github.vimcmd.chatJavaFx.server.ChatServer;
 
 import java.io.BufferedReader;
 import java.io.IOException;

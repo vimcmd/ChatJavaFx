@@ -1,4 +1,4 @@
-package com.github.vimcmd.message;
+package com.github.vimcmd.chatJavaFx.message;
 
 import java.util.List;
 

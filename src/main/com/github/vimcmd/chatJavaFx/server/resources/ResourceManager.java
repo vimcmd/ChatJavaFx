@@ -1,10 +1,10 @@
-package com.github.vimcmd.server.resources;
+package com.github.vimcmd.chatJavaFx.server.resources;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ResourceManager {
-    private static final ResourceBundle serverMessagesResource = ResourceBundle.getBundle("com.github.vimcmd.server.resources.serverResources", Locale
+    private static final ResourceBundle serverMessagesResource = ResourceBundle.getBundle("com.github.vimcmd.chatJavaFx.server.resources.serverResources", Locale
             .getDefault());
     public static final String RECIPIENT_CHARACTER = serverMessagesResource.getString("server.commands.recipientCharacter");
     public static final String SERVER_COMMAND_ARGUMENT_SEPARATOR = serverMessagesResource.getString("server.commands.argument.separator");

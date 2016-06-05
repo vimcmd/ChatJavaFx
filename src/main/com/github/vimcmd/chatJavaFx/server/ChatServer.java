@@ -1,6 +1,6 @@
-package com.github.vimcmd.server;
+package com.github.vimcmd.chatJavaFx.server;
 
-import com.github.vimcmd.server.socketThread.ChatServerClientConnectionRunnable;
+import com.github.vimcmd.chatJavaFx.server.socketThread.ChatServerClientConnectionRunnable;
 
 import java.net.InetAddress;
 import java.util.Map;

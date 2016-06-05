@@ -1,4 +1,4 @@
-package com.github.vimcmd.server.socketThread;
+package com.github.vimcmd.chatJavaFx.server.socketThread;
 
 import java.io.PrintStream;
 

@@ -1,4 +1,4 @@
-package com.github.vimcmd.client;
+package com.github.vimcmd.chatJavaFx.client;
 
 import java.io.BufferedReader;
 import java.io.IOException;

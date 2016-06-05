@@ -1,6 +1,6 @@
-package com.github.vimcmd.server.commands;
+package com.github.vimcmd.chatJavaFx.server.commands;
 
-import com.github.vimcmd.server.resources.ResourceManager;
+import com.github.vimcmd.chatJavaFx.server.resources.ResourceManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
