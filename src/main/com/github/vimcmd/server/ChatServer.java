@@ -1,5 +1,6 @@
-package java.com.github.vimcmd.server;
+package com.github.vimcmd.server;
 
+import java.net.InetAddress;
 import java.util.Map;
 
 public interface ChatServer {
@@ -12,4 +13,7 @@ public interface ChatServer {
 
     void send(ChatServerClientConnectionRunnable from, String messageBody);
 
+    InetAddress getInetAddress();
+
+    int getPortNumber();
 }

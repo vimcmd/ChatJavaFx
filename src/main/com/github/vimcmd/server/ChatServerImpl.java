@@ -1,13 +1,15 @@
-package java.com.github.vimcmd.server;
+package com.github.vimcmd.server;
 
-import java.com.github.vimcmd.message.ChatMessage;
-import java.com.github.vimcmd.message.ChatMessageImpl;
-import java.com.github.vimcmd.server.commands.Comandlet;
-import java.com.github.vimcmd.server.connectors.senderConnector.ChatServerSenderConnector;
-import java.com.github.vimcmd.server.connectors.senderConnector.ChatServerSenderImpl;
-import java.com.github.vimcmd.server.resources.ResourceManager;
+import com.github.vimcmd.message.ChatMessage;
+import com.github.vimcmd.message.ChatMessageImpl;
+import com.github.vimcmd.server.commands.Comandlet;
+import com.github.vimcmd.server.connectors.senderConnector.ChatServerSenderConnector;
+import com.github.vimcmd.server.connectors.senderConnector.ChatServerSenderImpl;
+import com.github.vimcmd.server.resources.ResourceManager;
+
 import java.io.IOException;
 import java.net.BindException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
@@ -24,13 +26,17 @@ public class ChatServerImpl implements ChatServer {
     };
     private Map<String, ChatServerClientConnectionRunnable> users;
     private ChatServerSenderConnector sender;
+    private ServerSocket serverSocket = null;
+    private int port = 54321;
 
     public ChatServerImpl(int port) {
+        this.port = port; // FIXME: 05.06.2016 check intervals
         users = new HashMap<>();
         sender = new ChatServerSenderImpl(this);
+        // TODO: 04.06.2016 create and run server bot thread
 
         try {
-            ServerSocket serverSocket = new ServerSocket(port);
+            serverSocket = new ServerSocket(port);
 
             System.out.println(String.format(ResourceManager.SERVER_STATUS_INITIALIZED, port));
 
@@ -39,7 +45,13 @@ public class ChatServerImpl implements ChatServer {
                 Socket socket = serverSocket.accept();
                 System.out.println(String.format(ResourceManager.SERVER_USER_CONNECTED, socket.getInetAddress()
                                                                                               .getHostName()));
-                new Thread(new ChatServerClientConnectionImpl(this, socket)).start();
+                Thread clientThread = new Thread(new ChatServerClientConnectionImpl(this, socket));
+                clientThread.start();
+
+                //if (clientThread.isErrorsOccured()) {
+                //    clientThread.interrupt();
+                //}
+
             }
 
         } catch (BindException e) {
@@ -90,6 +102,16 @@ public class ChatServerImpl implements ChatServer {
             }
         }
 
+    }
+
+    @Override
+    public InetAddress getInetAddress() {
+        return serverSocket.getInetAddress();
+    }
+
+    @Override
+    public int getPortNumber() {
+        return this.port;
     }
 
     private void processCommands(ChatServerClientConnectionRunnable from, ChatMessage message, Map<Comandlet, List<String>> messageCommands) {
