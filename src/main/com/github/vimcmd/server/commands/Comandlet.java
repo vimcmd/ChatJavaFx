@@ -1,6 +1,7 @@
-package java.com.github.vimcmd.server.commands;
+package com.github.vimcmd.server.commands;
 
-import java.com.github.vimcmd.server.resources.ResourceManager;
+import com.github.vimcmd.server.resources.ResourceManager;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

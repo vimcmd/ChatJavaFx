@@ -1,7 +1,7 @@
-package java.com.github.vimcmd.server.connectors.senderConnector;
+package com.github.vimcmd.server.connectors.senderConnector;
 
-import java.com.github.vimcmd.message.ChatMessage;
-import java.com.github.vimcmd.server.ChatServerClientConnectionRunnable;
+import com.github.vimcmd.message.ChatMessage;
+import com.github.vimcmd.server.ChatServerClientConnectionRunnable;
 
 public interface ChatServerSenderConnector {
 
