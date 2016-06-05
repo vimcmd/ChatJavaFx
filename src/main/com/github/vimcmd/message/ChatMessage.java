@@ -1,4 +1,4 @@
-package java.com.github.vimcmd.message;
+package com.github.vimcmd.message;
 
 import java.util.List;
 

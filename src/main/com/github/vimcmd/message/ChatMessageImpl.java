@@ -1,6 +1,7 @@
-package java.com.github.vimcmd.message;
+package com.github.vimcmd.message;
 
-import java.com.github.vimcmd.server.ChatServerClientConnectionRunnable;
+import com.github.vimcmd.server.ChatServerClientConnectionRunnable;
+
 import java.util.ArrayList;
 import java.util.List;
 
