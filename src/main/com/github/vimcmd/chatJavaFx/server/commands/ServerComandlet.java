@@ -1,6 +1,6 @@
 package com.github.vimcmd.chatJavaFx.server.commands;
 
-import com.github.vimcmd.chatJavaFx.server.resources.ResourceManager;
+import com.github.vimcmd.chatJavaFx.server.ServerResourceManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,17 +9,17 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public enum Comandlet {
-    COMMAND_SIGN(ResourceManager.SERVER_COMMAND_CHARACTER),
-    COMMAND_UNKNOWN(ResourceManager.SERVER_COMMAND_UNKNOWN),
-    REGISTER(ResourceManager.SERVER_COMMAND_REGISTER),
-    TO_RECIPIENT(ResourceManager.RECIPIENT_CHARACTER),
-    TIME(ResourceManager.SERVER_COMMAND_TIME),
-    HELP(ResourceManager.SERVER_COMMAND_HELP);
+public enum ServerComandlet {
+    COMMAND_SIGN(ServerResourceManager.SERVER_COMMAND_CHARACTER),
+    COMMAND_UNKNOWN(ServerResourceManager.SERVER_COMMAND_UNKNOWN),
+    REGISTER(ServerResourceManager.SERVER_COMMAND_REGISTER),
+    TO_RECIPIENT(ServerResourceManager.RECIPIENT_CHARACTER),
+    TIME(ServerResourceManager.SERVER_COMMAND_TIME),
+    HELP(ServerResourceManager.SERVER_COMMAND_HELP);
 
     private String value;
 
-    private Comandlet(String value) {
+    private ServerComandlet(String value) {
         this.value = value;
     }
 
@@ -29,8 +29,8 @@ public enum Comandlet {
      * @param text message
      * @return Map, where K - comandlet object, V - command arguments list
      */
-    public static Map<Comandlet, List<String>> extractCommands(String text) {
-        Map<Comandlet, List<String>> messageCommands = new HashMap<>();
+    public static Map<ServerComandlet, List<String>> extractCommands(String text) {
+        Map<ServerComandlet, List<String>> messageCommands = new HashMap<>();
 
         Pattern pattern = Pattern.compile("[" + TO_RECIPIENT.toString() + "|" + COMMAND_SIGN.toString() + "][a-zA-Z_0-9:]+\\b");
         Matcher matcher = pattern.matcher(text);
@@ -50,9 +50,9 @@ public enum Comandlet {
             if (matcher.group().startsWith(COMMAND_SIGN.toString())) {
                 // commandWithArgumentsArray[] = {String command, String arguments}
                 String[] commandWithArgumentsArray = matcher.group()
-                                                            .split(ResourceManager.SERVER_COMMAND_ARGUMENT_SEPARATOR, 2);
+                                                            .split(ServerResourceManager.SERVER_COMMAND_ARGUMENT_SEPARATOR, 2);
 
-                Comandlet command = getComandletByString(commandWithArgumentsArray[0]);
+                ServerComandlet command = getComandletByString(commandWithArgumentsArray[0]);
                 List<String> commandArgumentList = messageCommands.get(command);
                 if (commandArgumentList == null) {
                     commandArgumentList = new ArrayList<>();
@@ -73,8 +73,8 @@ public enum Comandlet {
         return messageCommands;
     }
 
-    private static Comandlet getComandletByString(String stringCommand) {
-        for(Comandlet comandlet : Comandlet.values()) {
+    private static ServerComandlet getComandletByString(String stringCommand) {
+        for(ServerComandlet comandlet : ServerComandlet.values()) {
             if (comandlet.toString().equals(stringCommand)) {
                 return comandlet;
             }

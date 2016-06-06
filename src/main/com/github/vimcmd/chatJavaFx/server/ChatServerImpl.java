@@ -4,9 +4,8 @@ import com.github.vimcmd.chatJavaFx.message.ChatMessageImpl;
 import com.github.vimcmd.chatJavaFx.server.connectors.senderConnector.ChatServerSenderImpl;
 import com.github.vimcmd.chatJavaFx.server.socketThread.ChatServerClientConnectionImpl;
 import com.github.vimcmd.chatJavaFx.message.ChatMessage;
-import com.github.vimcmd.chatJavaFx.server.commands.Comandlet;
+import com.github.vimcmd.chatJavaFx.server.commands.ServerComandlet;
 import com.github.vimcmd.chatJavaFx.server.connectors.senderConnector.ChatServerSenderConnector;
-import com.github.vimcmd.chatJavaFx.server.resources.ResourceManager;
 import com.github.vimcmd.chatJavaFx.server.socketThread.ChatServerClientConnectionRunnable;
 
 import java.io.IOException;
@@ -18,12 +17,12 @@ import java.util.*;
 
 public class ChatServerImpl implements ChatServer {
     static final int MAX_LOGIN_LENGTH = 20;
-    private final Set<Comandlet> supportedCommands = new HashSet<Comandlet>() {
+    private final Set<ServerComandlet> supportedCommands = new HashSet<ServerComandlet>() {
         {
-            this.add(Comandlet.COMMAND_UNKNOWN);
-            this.add(Comandlet.REGISTER);
-            this.add(Comandlet.TIME);
-            this.add(Comandlet.TO_RECIPIENT);
+            this.add(ServerComandlet.COMMAND_UNKNOWN);
+            this.add(ServerComandlet.REGISTER);
+            this.add(ServerComandlet.TIME);
+            this.add(ServerComandlet.TO_RECIPIENT);
         }
     };
     private Map<String, ChatServerClientConnectionRunnable> users;
@@ -40,13 +39,13 @@ public class ChatServerImpl implements ChatServer {
         try {
             serverSocket = new ServerSocket(port);
 
-            System.out.println(String.format(ResourceManager.SERVER_STATUS_INITIALIZED, port));
+            System.out.println(String.format(ServerResourceManager.SERVER_STATUS_INITIALIZED, port));
 
             for(; ; ) {
-                System.out.println(ResourceManager.SERVER_STATUS_WAITING_CLIENTS);
+                System.out.println(ServerResourceManager.SERVER_STATUS_WAITING_CLIENTS);
                 Socket socket = serverSocket.accept();
-                System.out.println(String.format(ResourceManager.SERVER_USER_CONNECTED, socket.getInetAddress()
-                                                                                              .getHostName()));
+                System.out.println(String.format(ServerResourceManager.SERVER_USER_CONNECTED, socket.getInetAddress()
+                                                                                                    .getHostName()));
                 Thread clientThread = new Thread(new ChatServerClientConnectionImpl(this, socket));
                 clientThread.start();
 
@@ -57,7 +56,7 @@ public class ChatServerImpl implements ChatServer {
             }
 
         } catch (BindException e) {
-            System.err.println(ResourceManager.SERVER_STATUS_ADDRESS_RESERVATION_ERROR + e);
+            System.err.println(ServerResourceManager.SERVER_STATUS_ADDRESS_RESERVATION_ERROR + e);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -87,15 +86,15 @@ public class ChatServerImpl implements ChatServer {
     @Override
     public void send(ChatServerClientConnectionRunnable from, String messageBody) {
         ChatMessage message = new ChatMessageImpl(from, messageBody);
-        Map<Comandlet, List<String>> messageCommands = Comandlet.extractCommands(messageBody);
+        Map<ServerComandlet, List<String>> messageCommands = ServerComandlet.extractCommands(messageBody);
 
         updateFromFieldIfUserRegistered(from, message);
 
         processCommands(from, message, messageCommands);
 
-        if (message.getFrom().isEmpty() && !messageCommands.containsKey(Comandlet.REGISTER)) {
-            sender.sendServerPrivateMessage(from, String.format(ResourceManager.SERVER_USER_MUST_REGISTER, Comandlet.REGISTER
-                    .toString() + ResourceManager.SERVER_COMMAND_ARGUMENT_SEPARATOR));
+        if (message.getFrom().isEmpty() && !messageCommands.containsKey(ServerComandlet.REGISTER)) {
+            sender.sendServerPrivateMessage(from, String.format(ServerResourceManager.SERVER_USER_MUST_REGISTER, ServerComandlet.REGISTER
+                    .toString() + ServerResourceManager.SERVER_COMMAND_ARGUMENT_SEPARATOR));
         } else {
             if (message.getRecipients().size() <= 0) {
                 sender.sendBroadcastMessage(message);
@@ -116,16 +115,16 @@ public class ChatServerImpl implements ChatServer {
         return this.port;
     }
 
-    private void processCommands(ChatServerClientConnectionRunnable from, ChatMessage message, Map<Comandlet, List<String>> messageCommands) {
-        for(Map.Entry<Comandlet, List<String>> messageCommand : messageCommands.entrySet()) {
+    private void processCommands(ChatServerClientConnectionRunnable from, ChatMessage message, Map<ServerComandlet, List<String>> messageCommands) {
+        for(Map.Entry<ServerComandlet, List<String>> messageCommand : messageCommands.entrySet()) {
 
-            Comandlet messageKey = messageCommand.getKey();
+            ServerComandlet messageKey = messageCommand.getKey();
             List<String> messageValue = messageCommand.getValue();
 
             if (supportedCommands.contains(messageKey)) {
 
                 // TODO: 04.06.2016 take commands from supportedCommands
-                if (messageKey.equals(Comandlet.REGISTER)) {
+                if (messageKey.equals(ServerComandlet.REGISTER)) {
                     String userNameForRegistration = messageValue.get(0);
                     if (userNameForRegistration != null || !userNameForRegistration.isEmpty()) {
                         // TODO: 04.06.2016 check if user exists, and get it name
@@ -134,18 +133,18 @@ public class ChatServerImpl implements ChatServer {
                     }
                 }
 
-                if (messageKey.equals(Comandlet.TO_RECIPIENT)) {
+                if (messageKey.equals(ServerComandlet.TO_RECIPIENT)) {
                     message.addRecipients(messageValue);
                 }
 
-                if (messageKey.equals(Comandlet.TIME)) {
+                if (messageKey.equals(ServerComandlet.TIME)) {
                     sender.sendServerPrivateMessage(from, new Date().toString());
                 }
 
-                if (messageKey.equals(Comandlet.COMMAND_UNKNOWN)) {
-                    final List<String> unknownCommands = messageCommands.get(Comandlet.COMMAND_UNKNOWN);
+                if (messageKey.equals(ServerComandlet.COMMAND_UNKNOWN)) {
+                    final List<String> unknownCommands = messageCommands.get(ServerComandlet.COMMAND_UNKNOWN);
                     if (unknownCommands != null) {
-                        sender.sendServerPrivateMessage(from, String.format(ResourceManager.SERVER_COMMAND_UNKNOWN_MESSAGE, unknownCommands));
+                        sender.sendServerPrivateMessage(from, String.format(ServerResourceManager.SERVER_COMMAND_UNKNOWN_MESSAGE, unknownCommands));
                     }
                 }
 
@@ -160,13 +159,13 @@ public class ChatServerImpl implements ChatServer {
         if (users.get(name) == null) {
             isFree = true;
         } else {
-            sender.sendServerPrivateMessage(ResourceManager.SERVER_USER_EXISTS, name);
+            sender.sendServerPrivateMessage(ServerResourceManager.SERVER_USER_EXISTS, name);
         }
 
         if (isUserNameCorrect(name)) {
             isCorrect = true;
         } else {
-            sender.sendServerPrivateMessage(client, String.format(ResourceManager.SERVER_USER_NAME_INCORRECT, name));
+            sender.sendServerPrivateMessage(client, String.format(ServerResourceManager.SERVER_USER_NAME_INCORRECT, name));
         }
 
         if (isFree && isCorrect) {
@@ -179,10 +178,10 @@ public class ChatServerImpl implements ChatServer {
     }
 
     private void sendSuccessRegistrationMessage(String name) {
-        sender.sendServerBroadcastMessage(String.format(ResourceManager.SERVER_USER_SUCCESSFULLY_REGISTERED, name));
+        sender.sendServerBroadcastMessage(String.format(ServerResourceManager.SERVER_USER_SUCCESSFULLY_REGISTERED, name));
         System.out.println(name + " registered");
-        sender.sendServerPrivateMessage(name, String.format(ResourceManager.SERVER_USER_WELCOME_MESSAGE, name));
-        sender.sendServerPrivateMessage(name, ResourceManager.SERVER_TIPS_PRIVATE);
+        sender.sendServerPrivateMessage(name, String.format(ServerResourceManager.SERVER_USER_WELCOME_MESSAGE, name));
+        sender.sendServerPrivateMessage(name, ServerResourceManager.SERVER_TIPS_PRIVATE);
     }
 
     private boolean isUserNameCorrect(String name) {

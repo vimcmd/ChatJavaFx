@@ -15,8 +15,8 @@ public class ChatServerClientConnectionImpl implements ChatServerClientConnectio
     private PrintStream printStream;
     private BufferedReader readerStream;
     private InetAddress inetAddress;
-    private ChatServer server;
-    private Socket socket;
+    private final ChatServer server;
+    private final Socket socket;
 
     public ChatServerClientConnectionImpl(ChatServer server, Socket socket) throws IOException {
         this.server = server;

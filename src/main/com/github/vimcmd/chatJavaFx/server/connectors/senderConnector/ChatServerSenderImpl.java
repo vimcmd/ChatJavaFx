@@ -3,7 +3,7 @@ package com.github.vimcmd.chatJavaFx.server.connectors.senderConnector;
 import com.github.vimcmd.chatJavaFx.server.ChatServer;
 import com.github.vimcmd.chatJavaFx.message.ChatMessage;
 import com.github.vimcmd.chatJavaFx.server.socketThread.ChatServerClientConnectionRunnable;
-import com.github.vimcmd.chatJavaFx.server.resources.ResourceManager;
+import com.github.vimcmd.chatJavaFx.server.ServerResourceManager;
 import java.io.PrintStream;
 import java.util.Map;
 
@@ -41,7 +41,7 @@ public class ChatServerSenderImpl implements ChatServerSenderConnector {
                 }
 
             } else {
-                sendServerPrivateMessage(message.getFrom(), String.format(ResourceManager.SERVER_USER_NOT_REGISTERED, recipient));
+                sendServerPrivateMessage(message.getFrom(), String.format(ServerResourceManager.SERVER_USER_NOT_REGISTERED, recipient));
             }
         }
     }
@@ -80,7 +80,7 @@ public class ChatServerSenderImpl implements ChatServerSenderConnector {
     private String formatPrivateMessage(ChatMessage message) {
         // TODO: 31.05.2016 format from properties
         // TODO: 31.05.2016 display only one recipient, not array (or display few, not all / display [private])
-        return message.getFrom() + " " + ResourceManager.RECIPIENT_CHARACTER + message.getRecipients() + ": " + message.getMessageBody();
+        return message.getFrom() + " " + ServerResourceManager.RECIPIENT_CHARACTER + message.getRecipients() + ": " + message.getMessageBody();
     }
 
     private String formatServerMessage(String messageBody) {
