@@ -49,7 +49,11 @@ public class ChatServerSenderImpl implements ChatServerSenderConnector {
     @Override
     public void sendServerBroadcastMessage(String messageBody) {
         String formattedServerMessage = formatServerMessage(messageBody);
-
+        for(Map.Entry<String, ChatServerClientConnectionRunnable> entry : server.getUsers().entrySet()) {
+            final PrintStream clientPrintStream = entry.getValue().getPrintStream();
+            clientPrintStream.println(formattedServerMessage);
+            clientPrintStream.flush();
+        }
     }
 
     @Override
