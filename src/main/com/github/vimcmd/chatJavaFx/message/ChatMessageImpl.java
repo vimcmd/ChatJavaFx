@@ -3,11 +3,12 @@ package com.github.vimcmd.chatJavaFx.message;
 import com.github.vimcmd.chatJavaFx.server.socketThread.ChatServerClientConnectionRunnable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ChatMessageImpl implements ChatMessage {
 
-    private String from;
+    private String from = "";
     private ChatServerClientConnectionRunnable sender;
     private List<String> recipients;
     private String messageBody;
@@ -30,9 +31,6 @@ public class ChatMessageImpl implements ChatMessage {
 
     @Override
     public String getFrom() {
-        if (from == null) {
-            return "";
-        }
         return from;
     }
 
@@ -44,14 +42,11 @@ public class ChatMessageImpl implements ChatMessage {
 
     @Override
     public List<String> getRecipients() {
-        return new ArrayList<>(recipients);
+        return Collections.unmodifiableList(recipients);
     }
 
     @Override
     public String getMessageBody() {
-        if (messageBody == null) {
-            return "";
-        }
         return messageBody;
     }
 
